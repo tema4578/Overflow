@@ -9,7 +9,6 @@ pygame.init()
 pygame.display.set_caption('first')
 screen = pygame.display.set_mode((800, 600))
 one = pygame.transform.rotozoom(pygame.image.load('red.jpg').convert(), 0.5, 0.5)
-two = pygame.transform.rotozoom(pygame.image.load('green.jpg').convert(), 0.5, 0.5)
 
 
 def load_image(name, colorkey=None):
@@ -26,8 +25,6 @@ def load_image(name, colorkey=None):
 z = randrange(3)
 one_x = 260
 one_y = 380
-two_x = 260
-two_y = 330
 q = 0
 
 
@@ -61,33 +58,21 @@ class buttle1(pygame.sprite.Sprite):
                 if one_x == 260:
                     one_y -= 50
                     screen.blit(one, (one_x, one_y))
-                if two_x == 260:
-                    two_y -= 50
-                    screen.blit(two, (two_x, two_y))
             elif self.count % 2 == 0:
                 self.rect.y += 50
                 y1 += 50
                 if one_x == 260:
                     one_y += 50
                     screen.blit(one, (one_x, one_y))
-                if two_x == 260:
-                    two_y += 50
-                    screen.blit(two, (two_x, two_y))
                 q = 0
                 self.count += 1
             else:
                 global y3
                 global y2
-                if one_x == 460 and two_x != 460 or one_x == 360 and two_x != 360:
-                    one_x = 260
-                    one_y += 50
-                    screen.blit(one, (one_x, one_y))
-                    pygame.display.flip()
-                if one_x != 460 and two_x == 460 or one_x != 360 and two_x == 360:
-                    two_x = 260
-                    two_y += 50
-                    screen.blit(two, (two_x, two_y))
-                    pygame.display.flip()
+                one_x = 260
+                one_y += 50
+                screen.blit(one, (one_x, one_y))
+                pygame.display.flip()
                 if y3 == 150:
                     y3 += 50
                 elif y2 == 150:
@@ -123,9 +108,6 @@ class buttle2(pygame.sprite.Sprite):
                 if one_x == 360:
                     one_y -= 50
                     screen.blit(one, (one_x, one_y))
-                if two_x == 360:
-                    two_y -= 50
-                    screen.blit(two, (two_x, two_y))
             elif self.count % 2 == 0:
                 self.rect.y += 50
                 y2 += 50
@@ -134,22 +116,13 @@ class buttle2(pygame.sprite.Sprite):
                 if one_x == 360:
                     one_y += 50
                     screen.blit(one, (one_x, one_y))
-                if two_x == 360:
-                    two_y += 50
-                    screen.blit(two, (two_x, two_y))
             else:
                 global y1
                 global y3
-                if one_x == 260 and two_x != 260 or one_x == 460 and two_x != 460:
-                    one_x = 360
-                    one_y += 50
-                    screen.blit(one, (one_x, one_y))
-                    pygame.display.flip()
-                if one_x != 460 and two_x == 460 or one_x != 360 and two_x == 360:
-                    two_x = 260
-                    two_y += 50
-                    screen.blit(two, (two_x, two_y))
-                    pygame.display.flip()
+                one_x = 360
+                one_y += 50
+                screen.blit(one, (one_x, one_y))
+                pygame.display.flip()
                 if y1 == 150:
                     y1 += 50
                 elif y3 == 150:
@@ -185,9 +158,6 @@ class buttle3(pygame.sprite.Sprite):
                 if one_x == 460:
                     one_y -= 50
                     screen.blit(one, (one_x, one_y))
-                if two_x == 460:
-                    two_y -= 50
-                    screen.blit(two, (two_x, two_y))
             elif self.count % 2 == 0:
                 self.rect.y += 50
                 y3 -= 50
@@ -196,17 +166,13 @@ class buttle3(pygame.sprite.Sprite):
                 if one_x == 460:
                     one_y += 50
                     screen.blit(one, (one_x, one_y))
-                if two_x == 460:
-                    two_y += 50
-                    screen.blit(two, (two_x, two_y))
             else:
                 global y1
                 global y2
-                if one_x == 260 and two_x != 260 or one_x == 360 and two_x != 360:
-                    one_x = 460
-                    one_y += 50
-                    screen.blit(one, (one_x, one_y))
-                    pygame.display.flip()
+                one_x = 460
+                one_y += 50
+                screen.blit(one, (one_x, one_y))
+                pygame.display.flip()
                 if y1 == 150:
                     y1 += 50
                 elif y2 == 150:
@@ -218,7 +184,6 @@ def run():
         global one_x
         global one_y
         screen.blit(one, (one_x, one_y))
-        screen.blit(two, (two_x, two_y))
         pygame.display.flip()
         clock.tick(CLK)
         for event in pygame.event.get():
@@ -245,4 +210,5 @@ if __name__ == "__main__":
     buttle3(all_sprites, 450, 200)
     run()
     pygame.quit()
+
 
