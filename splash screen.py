@@ -50,19 +50,26 @@ def start_screen(x_pos):
         text_coord += intro_rect.height
         screen.blit(string_rendered, intro_rect)
 
-
+MYEVENTTYPE = pygame.USEREVENT + 1
 all_sprites = pygame.sprite.Group()
 running = True
 clock = pygame.time.Clock()
 v = 160
 x_pos = 0
+pygame.time.set_timer(MYEVENTTYPE, 15000)
+c = 0
 while running:
     screen.fill('black')
     for event in pygame.event.get():
+        if event.type == MYEVENTTYPE:
+            c = 1
         if event.type == pygame.QUIT:
             running = False
-    if x_pos <= 600:
+    if x_pos <= 600 or c == 2:
         start_screen(x_pos)
+    elif c == 1:
+        x_pos = 600
+        c = 2
     else:
         start_screen(600)
     all_sprites.draw(screen)
