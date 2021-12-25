@@ -10,7 +10,9 @@ pygame.display.set_caption('first')
 screen = pygame.display.set_mode((800, 600))
 one = pygame.transform.rotozoom(pygame.image.load('red.jpg').convert(), 0.5, 0.5)
 
+pygame.mixer.music.load('Sound_07433 (mp3cut.net).wav')
 
+sound1 = pygame.mixer.Sound('Sound_07433 (mp3cut.net).wav')
 def load_image(name, colorkey=None):
     image = pygame.image.load('buttle.jpg')
     if colorkey is not None:
@@ -44,6 +46,7 @@ class buttle1(pygame.sprite.Sprite):
     def update(self, *args):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
+            sound1.play()
             global q
             global one_y
             global one_x
@@ -94,6 +97,7 @@ class buttle2(pygame.sprite.Sprite):
     def update(self, *args):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
+            sound1.play()
             global q
             global one_x
             global one_y
@@ -144,6 +148,7 @@ class buttle3(pygame.sprite.Sprite):
     def update(self, *args):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
+            sound1.play()
             global q
             global y3
             global one_x
