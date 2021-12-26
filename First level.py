@@ -1,218 +1,109 @@
+import os
+import sys
+
 import pygame
-from random import randrange
 
-lst1 = [0, 0, 0, 0]
-lst2 = [0, 0, 0, 0]
-lst3 = [0, 0, 0, 0]
-CLK = 70
+# Изображение не получится загрузить
+# без предварительной инициализации pygame
 pygame.init()
-pygame.display.set_caption('first')
-screen = pygame.display.set_mode((800, 600))
-one = pygame.transform.rotozoom(pygame.image.load('red.jpg').convert(), 0.5, 0.5)
-
-pygame.mixer.music.load('Sound_07433 (mp3cut.net).wav')
-
+size = width, height = 800, 600
+screen = pygame.display.set_mode(size)
 sound1 = pygame.mixer.Sound('Sound_07433 (mp3cut.net).wav')
-def load_image(name, colorkey=None):
-    image = pygame.image.load('buttle.jpg')
+
+
+def load_image(name, colorkey=None, fl=False):
+    fullname = os.path.join(name)
+    # если файл не существует, то выходим
+    if not os.path.isfile(fullname):
+        print(f"Файл с изображением '{fullname}' не найден")
+        sys.exit()
+    image = pygame.image.load(fullname)
     if colorkey is not None:
         image = image.convert()
         if colorkey == -1:
-            colorkey = image.get_at((1, 1))
+            colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey)
     else:
         image = image.convert_alpha()
+    if fl:
+        image = pygame.transform.flip(image, True, False)
     return image
 
-z = randrange(3)
-one_x = 260
-one_y = 380
-q = 0
 
-
-class buttle1(pygame.sprite.Sprite):
+class Bomb(pygame.sprite.Sprite):
+    image_1 = load_image("buttle.jpg")
+    image_boom = load_image("buttle.jpg")
     image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
 
     def __init__(self, group, x, y):
+        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
+        # Это очень важно !!!
         super().__init__(group)
-        self.image = buttle1.image
+        self.image = Bomb.image
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        global y1
-        y1 = self.rect.y
-        self.count = 1
+        self.flag = True
+        self.name = count
 
     def update(self, *args):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
-            sound1.play()
-            global q
-            global one_y
-            global one_x
-            global two_y
-            global two_x
-            global y1
-            if q == 0:
-                q = 1
-                self.rect.y -= 50
-                self.count += 1
-                y1 -= 50
-                if one_x == 260:
-                    one_y -= 50
-                    screen.blit(one, (one_x, one_y))
-            elif self.count % 2 == 0:
-                self.rect.y += 50
-                y1 += 50
-                if one_x == 260:
-                    one_y += 50
-                    screen.blit(one, (one_x, one_y))
-                q = 0
-                self.count += 1
+            if self.flag:
+                self.rect.y -= 20
+                rect_sprite.update(self.name, self.flag)
+                self.flag = False
+                sound1.play()
             else:
-                global y3
-                global y2
-                one_x = 260
-                one_y += 50
-                screen.blit(one, (one_x, one_y))
-                pygame.display.flip()
-                if y3 == 150:
-                    y3 += 50
-                elif y2 == 150:
-                    y2 += 50
+                rect_sprite.update(self.name, self.flag)
+                self.rect.y += 20
+                self.flag = True
+                sound1.play()
 
-class buttle2(pygame.sprite.Sprite):
-    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
 
+class Player(pygame.sprite.Sprite):
     def __init__(self, group, x, y):
+        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
+        # Это очень важно !!!
         super().__init__(group)
-        self.image = buttle2.image
+        self.image = pygame.Surface((54, 54))
+        self.image.fill('GREEN')
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        global y2
-        y2 = self.rect.y
-        self.count = 1
+        self.rect.center = (x, y)
+        self.flag = True
+        self.name = count
 
     def update(self, *args):
-        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
-                self.rect.collidepoint(args[0].pos):
-            sound1.play()
-            global q
-            global one_x
-            global one_y
-            global two_x
-            global two_y
-            global y2
-            if q == 0:
-                q = 1
-                self.rect.y -= 50
-                y2 -= 50
-                self.count += 1
-                if one_x == 360:
-                    one_y -= 50
-                    screen.blit(one, (one_x, one_y))
-            elif self.count % 2 == 0:
-                self.rect.y += 50
-                y2 += 50
-                q = 0
-                self.count += 1
-                if one_x == 360:
-                    one_y += 50
-                    screen.blit(one, (one_x, one_y))
-            else:
-                global y1
-                global y3
-                one_x = 360
-                one_y += 50
-                screen.blit(one, (one_x, one_y))
-                pygame.display.flip()
-                if y1 == 150:
-                    y1 += 50
-                elif y3 == 150:
-                    y3 += 50
-
-class buttle3(pygame.sprite.Sprite):
-    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
-
-    def __init__(self, group, x, y):
-        super().__init__(group)
-        self.image = buttle3.image
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        global y3
-        y3 = self.rect.y
-        self.count = 1
-
-    def update(self, *args):
-        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
-                self.rect.collidepoint(args[0].pos):
-            sound1.play()
-            global q
-            global y3
-            global one_x
-            global one_y
-            global two_x
-            global two_y
-            if q == 0:
-                q = 1
-                self.rect.y -= 50
-                y3 -= 50
-                self.count += 1
-                if one_x == 460:
-                    one_y -= 50
-                    screen.blit(one, (one_x, one_y))
-            elif self.count % 2 == 0:
-                self.rect.y += 50
-                y3 -= 50
-                q = 0
-                self.count += 1
-                if one_x == 460:
-                    one_y += 50
-                    screen.blit(one, (one_x, one_y))
-            else:
-                global y1
-                global y2
-                one_x = 460
-                one_y += 50
-                screen.blit(one, (one_x, one_y))
-                pygame.display.flip()
-                if y1 == 150:
-                    y1 += 50
-                elif y2 == 150:
-                    y2 += 50
+        if args[0] == self.name and args[1]:
+            self.rect.y -= 20
+        elif args[0] == self.name:
+            self.rect.y += 20
 
 
-def run():
-    while True:
-        global one_x
-        global one_y
-        screen.blit(one, (one_x, one_y))
-        pygame.display.flip()
-        clock.tick(CLK)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+all_sprites = pygame.sprite.Group()
+rect_sprite = pygame.sprite.Group()
+r_x = 200
+count = 1
+for _ in range(5):
+    Bomb(all_sprites, r_x, 200)
+    Player(rect_sprite, r_x + 40, 402)
+    r_x += 100
+    count += 1
+running = True
+fps = 60
+clock = pygame.time.Clock()
+CLK = 70
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
             all_sprites.update(event)
-        draw()
-
-
-def draw():
-    screen.fill("black")
-    all_sprites.update()
+    screen.fill((0, 0, 0))
     all_sprites.draw(screen)
+    rect_sprite.draw(screen)
+    all_sprites.update()
+
+    clock.tick(fps)
     pygame.display.flip()
-
-
-if __name__ == "__main__":
-    clock = pygame.time.Clock()
-    all_sprites = pygame.sprite.Group()
-    bomb_image = load_image("buttle.jpg")
-    buttle1(all_sprites, 250, 200)
-    buttle2(all_sprites, 350, 200)
-    buttle3(all_sprites, 450, 200)
-    run()
-    pygame.quit()
-
+pygame.quit()
