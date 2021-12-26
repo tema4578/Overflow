@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 
 import pygame
@@ -41,6 +42,7 @@ class Bomb(pygame.sprite.Sprite):
         super().__init__(group)
         self.image = Bomb.image
         self.rect = self.image.get_rect()
+        print(self.rect)
         self.rect.x = x
         self.rect.y = y
         self.flag = True
@@ -62,12 +64,12 @@ class Bomb(pygame.sprite.Sprite):
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, group, x, y):
+    def __init__(self, group, x, y, color):
         # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
         # Это очень важно !!!
         super().__init__(group)
-        self.image = pygame.Surface((54, 54))
-        self.image.fill('GREEN')
+        self.image = pygame.Surface((54, 59))
+        self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.flag = True
@@ -84,9 +86,13 @@ all_sprites = pygame.sprite.Group()
 rect_sprite = pygame.sprite.Group()
 r_x = 200
 count = 1
+color = ['GREEN', 'RED', 'BLUE', 'ORANGE', 'beige', 'Brown', 'yellow']
 for _ in range(5):
     Bomb(all_sprites, r_x, 200)
-    Player(rect_sprite, r_x + 40, 402)
+    c = 400
+    for j in range(4):
+        Player(rect_sprite, r_x + 40, c, random.choice(color))
+        c -= 54
     r_x += 100
     count += 1
 running = True
