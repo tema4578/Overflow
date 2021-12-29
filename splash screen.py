@@ -33,22 +33,24 @@ fon = pygame.transform.scale(load_image('imgonline-com-ua-Blur-ykTKkV1kMcGaMH0L.
 
 
 def start_screen(x_pos):
-    intro_text = ["          ЗАСТАВКА", "",
-                  "         Правила игры",
-                  "Если в правилах несколько строк,",
-                  "приходится выводить их построчно"]
+    intro_text = ["ИНСТРУКЦИЯ",
+                  "Перелейте каждый цвет в свою емкость.",
+                  "Верхний цвет можно перелить к такому же цвету ",
+                  "или в пустую емкость."]
 
     screen.blit(fon, (x_pos - 600, 0))
     font = pygame.font.SysFont('Comic Sans MS', 24)
     text_coord = 10
+    x = [100, 30, 10, 50]
     for line in intro_text:
         string_rendered = font.render(line, 1, (1, 50, 32), pygame.Color('pink'))
         intro_rect = string_rendered.get_rect()
         text_coord += 10
         intro_rect.top = text_coord
-        intro_rect.x = -x_pos + 610
+        intro_rect.x = -x_pos + 600 + x[intro_text.index(line)]
         text_coord += intro_rect.height
         screen.blit(string_rendered, intro_rect)
+
 
 MYEVENTTYPE = pygame.USEREVENT + 1
 all_sprites = pygame.sprite.Group()
@@ -58,8 +60,8 @@ v = 160
 x_pos = 0
 pygame.time.set_timer(MYEVENTTYPE, 15000)
 c = 0
-'''sound1 = pygame.mixer.Sound('Sound_08462 (mp3cut.net).wav')
-sound1.play()'''
+sound1 = pygame.mixer.Sound('Sound_08462 (mp3cut.net).wav')
+sound1.play()
 while running:
     screen.fill('black')
     for event in pygame.event.get():

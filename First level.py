@@ -31,6 +31,33 @@ def load_image(name, colorkey=None, fl=False):
     return image
 
 
+class AnimatedSprite(pygame.sprite.Sprite):
+    def __init__(self, sheet, columns, rows, x, y):
+        super().__init__(buttons)
+        self.frames = []
+        self.cut_sheet(sheet, columns, rows)
+        self.cur_frame = 0
+        self.image = self.frames[self.cur_frame]
+        self.rect = self.rect.move(x, y)
+
+    def cut_sheet(self, sheet, columns, rows):
+        self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
+                                sheet.get_height() // rows)
+        for j in range(rows):
+            for i in range(columns):
+                frame_location = (self.rect.w * i, self.rect.h * j)
+                self.frames.append(sheet.subsurface(pygame.Rect(
+                    frame_location, self.rect.size)))
+
+    def update(self, *args):
+        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+        self.image = self.frames[self.cur_frame]
+
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos):
+            print(45)
+
+
 class Bomb(pygame.sprite.Sprite):
     image_1 = load_image("buttle.jpg")
     image_boom = load_image("buttle.jpg")
@@ -42,7 +69,6 @@ class Bomb(pygame.sprite.Sprite):
         super().__init__(group)
         self.image = Bomb.image
         self.rect = self.image.get_rect()
-        print(self.rect)
         self.rect.x = x
         self.rect.y = y
         self.flag = True
@@ -84,8 +110,10 @@ class Player(pygame.sprite.Sprite):
 
 all_sprites = pygame.sprite.Group()
 rect_sprite = pygame.sprite.Group()
+buttons = pygame.sprite.Group()
 r_x = 200
 count = 1
+dragon = AnimatedSprite(load_image('a9f3c828662677e292981aae2f8061f0.png', -1), 5, 5, 630, -40)
 color = ['GREEN', 'RED', 'BLUE', 'ORANGE', 'beige', 'Brown', 'yellow']
 for _ in range(5):
     Bomb(all_sprites, r_x, 200)
@@ -105,11 +133,14 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             all_sprites.update(event)
+            buttons.update(event)
     screen.fill((0, 0, 0))
+    buttons.draw(screen)
+    buttons.update()
     all_sprites.draw(screen)
     rect_sprite.draw(screen)
     all_sprites.update()
 
-    clock.tick(fps)
+    clock.tick(10)
     pygame.display.flip()
 pygame.quit()
