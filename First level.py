@@ -32,14 +32,25 @@ def load_image(name, colorkey=None, fl=False):
 
 
 fon = pygame.transform.scale(load_image('imgonline-com-ua-Blur-ykTKkV1kMcGaMH0L.jpg'), size)
+
+
+def defr(cc):
+    font = pygame.font.SysFont('Comic Sans MS', 30)
+    string_rendere = font.render(f'Отменить ход: {cc}', 1, pygame.Color('white'))
+    screen.blit(string_rendere, (170, 10))
+
+
 count_23 = 45
 
 fgf = False
+
+
 def start_screen(x_pos, flag, flag2):
-    global count_23, fgf
+    global count_23, fgf, co
     if flag2:
         if count_23 != 0:
             count_23 -= 5
+            co += 1
         else:
             fgf = True
     intro_text = [f'{count_23}']
@@ -107,7 +118,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 class Bomb(pygame.sprite.Sprite):
     image_1 = load_image("buttle.jpg")
     image_boom = load_image("buttle.jpg")
-    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
+    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.3, 0.3)
 
     def __init__(self, group, x, y):
         # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
@@ -140,7 +151,7 @@ class Player(pygame.sprite.Sprite):
         # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
         # Это очень важно !!!
         super().__init__(group)
-        self.image = pygame.Surface((54, 59))
+        self.image = pygame.Surface((32, 30))
         self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -166,16 +177,17 @@ dragon2 = AnimatedSprite(
 color = ['GREEN', 'RED', 'BLUE', 'ORANGE', 'beige', 'Brown', 'yellow']
 for _ in range(5):
     Bomb(all_sprites, r_x, 200)
-    c = 400
+    c = 320
     for j in range(4):
-        Player(rect_sprite, r_x + 40, c, random.choice(color))
-        c -= 54
+        Player(rect_sprite, r_x + 22, c, random.choice(color))
+        c -= 30
     r_x += 100
     count += 1
 running = True
 fps = 60
 clock = pygame.time.Clock()
 CLK = 20
+co = 5
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -190,6 +202,7 @@ while running:
     rect_sprite.draw(screen)
     all_sprites.update()
     start_screen(24, False, False)
-    clock.tick(5)
+    #clock.tick(5)
+    defr(co)
     pygame.display.flip()
 pygame.quit()
