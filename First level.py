@@ -31,6 +31,52 @@ def load_image(name, colorkey=None, fl=False):
     return image
 
 
+fon = pygame.transform.scale(load_image('imgonline-com-ua-Blur-ykTKkV1kMcGaMH0L.jpg'), size)
+count_23 = 45
+
+fgf = False
+def start_screen(x_pos, flag, flag2):
+    global count_23, fgf
+    if flag2:
+        if count_23 != 0:
+            count_23 -= 5
+        else:
+            fgf = True
+    intro_text = [f'{count_23}']
+
+    if flag:
+        intro_text = ["ИНСТРУКЦИЯ",
+                      "Перелейте каждый цвет в свою емкость.",
+                      "Верхний цвет можно перелить к такому же цвету ",
+                      "или в пустую емкость."]
+    if flag:
+        screen.blit(fon, (x_pos - 600, 0))
+        font = pygame.font.SysFont('Comic Sans MS', 24)
+        text_coord = 10
+    else:
+        text_coord = -12
+        font = pygame.font.SysFont('Comic Sans MS', 40)
+
+    x = [100, 30, 10, 50]
+    for line in intro_text:
+        if flag:
+            string_rendered = font.render(line, 1, (1, 50, 32), pygame.Color('pink'))
+        elif count_23 == 0:
+            string_rendered = font.render(line, 1, pygame.Color('red'))
+        else:
+            string_rendered = font.render(line, 1, pygame.Color('gold'))
+
+        intro_rect = string_rendered.get_rect()
+        text_coord += 10
+        intro_rect.top = text_coord
+        if flag:
+            intro_rect.x = -x_pos + 600 + x[intro_text.index(line)]
+        else:
+            intro_rect.x = 15
+        text_coord += intro_rect.height
+        screen.blit(string_rendered, intro_rect)
+
+
 class AnimatedSprite(pygame.sprite.Sprite):
     def __init__(self, sheet, columns, rows, x, y):
         super().__init__(buttons)
@@ -55,7 +101,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
-            print(45)
+            start_screen(24, False, True)
 
 
 class Bomb(pygame.sprite.Sprite):
@@ -113,7 +159,10 @@ rect_sprite = pygame.sprite.Group()
 buttons = pygame.sprite.Group()
 r_x = 200
 count = 1
-dragon = AnimatedSprite(load_image('a9f3c828662677e292981aae2f8061f0.png', -1), 5, 5, 630, -40)
+dragon1 = AnimatedSprite(
+    pygame.transform.scale(load_image('photoeditorsdk-export.png', -1), (40, 40)), 1, 1, 110, 5)
+dragon2 = AnimatedSprite(
+    pygame.transform.scale(load_image('photoeditorsdk-export (1).png', -1), (40, 40)), 1, 1, 65, 5)
 color = ['GREEN', 'RED', 'BLUE', 'ORANGE', 'beige', 'Brown', 'yellow']
 for _ in range(5):
     Bomb(all_sprites, r_x, 200)
@@ -126,7 +175,7 @@ for _ in range(5):
 running = True
 fps = 60
 clock = pygame.time.Clock()
-CLK = 70
+CLK = 20
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -140,7 +189,7 @@ while running:
     all_sprites.draw(screen)
     rect_sprite.draw(screen)
     all_sprites.update()
-
-    clock.tick(10)
+    start_screen(24, False, False)
+    clock.tick(5)
     pygame.display.flip()
 pygame.quit()
