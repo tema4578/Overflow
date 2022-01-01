@@ -60,8 +60,6 @@ v = 160
 x_pos = 0
 pygame.time.set_timer(MYEVENTTYPE, 15000)
 c = 0
-sound1 = pygame.mixer.Sound('Sound_08462 (mp3cut.net).wav')
-sound1.play()
 while running:
     screen.fill('black')
     for event in pygame.event.get():
