@@ -1,0 +1,1157 @@
+import pygame
+from random import choice
+
+lstred = []
+lstgreen = []
+lst = [0, 0, 0, 0, 1, 1, 1, 1]
+lst1 = [1, 1, 1, 1]
+lst2 = [1, 1, 1, 1]
+lst3 = [0, 0, 0, 0]
+CLK = 70
+one_x = 260
+one_y = 380
+two_x = 260
+two_y = 330
+three_x = 260
+three_y = 280
+four_x = 260
+four_y = 230
+q = 0
+five_x = 360
+five_y = 380
+six_x = 360
+six_y = 330
+seven_x = 360
+seven_y = 280
+eight_x = 360
+eight_y = 230
+pygame.init()
+pygame.display.set_caption('first level')
+screen = pygame.display.set_mode((800, 600))
+
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, group, x, y, color):
+        super().__init__(group)
+        self.image = pygame.Surface((54, 50))
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.flag = True
+
+    def q(self, x, y):
+        self.rect.center = (x, y)
+
+
+rect_sprite = pygame.sprite.Group()
+
+
+def load_image(name, colorkey=None):
+    image = pygame.image.load('buttle.jpg')
+    if colorkey is not None:
+        image = image.convert()
+        if colorkey == -1:
+            colorkey = image.get_at((1, 1))
+    else:
+        image = image.convert_alpha()
+    return image
+
+
+
+
+class buttle1(pygame.sprite.Sprite):
+    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
+
+    def __init__(self, group, x, y):
+        super().__init__(group)
+        self.image = buttle1.image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        global y1
+        y1 = self.rect.y
+        self.count = 1
+
+    def update(self, *args):
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos):
+            global five_y, five_x, six_y, six_x, seven_y, seven_x, eight_x, eight_y, \
+                one_y, one_x, two_y, two_x, three_y, three_x, four_x, four_y, y1, q
+            if q == 0:
+                if self.count % 2 != 0:
+                    q = 1
+                    self.rect.y -= 50
+                    self.count += 1
+                    y1 -= 50
+                    if one_x == 260:
+                        one_y -= 50
+                    if two_x == 260:
+                        two_y -= 50
+                    if three_x == 260:
+                        three_y -= 50
+                    if four_x == 260:
+                        four_y -= 50
+                    if five_x == 260:
+                        five_y -= 50
+                    if six_x == 260:
+                        six_y -= 50
+                    if seven_x == 260:
+                        seven_y -= 50
+                    if eight_x == 260:
+                        eight_y -= 50
+            else:
+                if self.count % 2 == 0:
+                    q = 0
+                    self.rect.y += 50
+                    y1 += 50
+                    if one_x == 260:
+                        one_y += 50
+                    if two_x == 260:
+                        two_y += 50
+                    if three_x == 260:
+                        three_y += 50
+                    if four_x == 260:
+                        four_y += 50
+                    if five_x == 260:
+                        five_y += 50
+                    if six_x == 260:
+                        six_y += 50
+                    if seven_x == 260:
+                        seven_y += 50
+                    if eight_x == 260:
+                        eight_y += 50
+                    self.count += 1
+                else:
+                    if self.count % 2 == 0:
+                        q = 0
+                        self.rect.y += 50
+                        y1 += 50
+                        if one_x == 360:
+                            one_y += 50
+                        if two_x == 360:
+                            two_y += 50
+                        if three_x == 360:
+                            three_y += 50
+                        if four_x == 360:
+                            four_y += 50
+                        if five_x == 360:
+                            five_y += 50
+                        if six_x == 360:
+                            six_y += 50
+                        if seven_x == 360:
+                            seven_y += 50
+                        if eight_x == 360:
+                            eight_y += 50
+                        self.count += 1
+                    else:
+                        global y3, y2
+                        if lst1[3] == 0:
+                            if lst1[2] == 0:
+                                if lst1[1] == 0:
+                                    if lst1[0] == 0:
+                                        w = 0
+                                        z = 0
+                                        if y2 == 150:
+                                            z = 360
+                                            if lst2[3] == 1:
+                                                w = 180
+                                                lst1[0] = 1
+                                                lst2[3] = 0
+                                            elif lst2[2] == 1:
+                                                w = 230
+                                                lst1[0] = 1
+                                                lst2[2] = 0
+                                            elif lst2[1] == 1:
+                                                w = 280
+                                                lst1[0] = 1
+                                                lst2[1] = 0
+                                            elif lst2[0] == 1:
+                                                w = 330
+                                                lst1[0] = 1
+                                                lst2[0] = 0
+                                        elif y3 == 150:
+                                            z = 460
+                                            if lst3[3] == 1:
+                                                w = 180
+                                                lst3[3] = 0
+                                                lst1[0] = 1
+                                            elif lst3[2] == 1:
+                                                w = 230
+                                                lst3[2] = 0
+                                                lst1[0] = 1
+                                            elif lst3[1] == 1:
+                                                w = 280
+                                                lst3[1] = 0
+                                                lst1[0] = 1
+                                            elif lst3[0] == 1:
+                                                w = 330
+                                                lst3[0] = 0
+                                                lst1[0] = 1
+                                        if one_y == w and one_x == z:
+                                            one_x = 260
+                                            one_y = 380
+                                        elif two_y == w and two_x == z:
+                                            two_x = 260
+                                            two_y = 380
+                                        elif three_y == w and three_x == z:
+                                            three_x = 260
+                                            three_y = 380
+                                        elif four_y == w and four_x == z:
+                                            four_x = 260
+                                            four_y = 380
+                                        elif five_y == w and five_x == z:
+                                            five_x = 260
+                                            five_y = 380
+                                        elif six_y == w and six_x == z:
+                                            six_x = 260
+                                            six_y = 380
+                                        elif seven_y == w and seven_x == z:
+                                            seven_x = 260
+                                            seven_y = 380
+                                        elif eight_y == w and eight_x == z:
+                                            eight_x = 260
+                                            eight_y = 380
+                                    else:
+                                        w = 0
+                                        z = 0
+                                        if y2 == 150:
+                                            z = 360
+                                            if lst2[3] == 1:
+                                                w = 180
+                                                lst1[1] = 1
+                                                lst2[3] = 0
+                                            elif lst2[2] == 1:
+                                                w = 230
+                                                lst1[1] = 1
+                                                lst2[2] = 0
+                                            elif lst2[1] == 1:
+                                                w = 280
+                                                lst1[1] = 1
+                                                lst2[1] = 0
+                                            elif lst2[0] == 1:
+                                                w = 330
+                                                lst1[1] = 1
+                                                lst2[0] = 0
+                                        elif y3 == 150:
+                                            z = 460
+                                            if lst3[3] == 1:
+                                                w = 180
+                                                lst3[3] = 0
+                                                lst1[1] = 1
+                                            elif lst3[2] == 1:
+                                                w = 230
+                                                lst3[2] = 0
+                                                lst1[1] = 1
+                                            elif lst3[1] == 1:
+                                                w = 280
+                                                lst3[1] = 0
+                                                lst1[1] = 1
+                                            elif lst3[0] == 1:
+                                                w = 330
+                                                lst3[0] = 0
+                                                lst1[1] = 1
+                                        if one_y == w and one_x == z:
+                                            one_x = 260
+                                            one_y = 330
+                                        elif two_y == w and two_x == z:
+                                            two_x = 260
+                                            two_y = 330
+                                        elif three_y == w and three_x == z:
+                                            three_x = 260
+                                            three_y = 330
+                                        elif four_y == w and four_x == z:
+                                            four_x = 260
+                                            four_y = 330
+                                        elif five_y == w and five_x == z:
+                                            five_x = 260
+                                            five_y = 330
+                                        elif six_y == w and six_x == z:
+                                            six_x = 260
+                                            six_y = 330
+                                        elif seven_y == w and seven_x == z:
+                                            seven_x = 260
+                                            seven_y = 330
+                                        elif eight_y == w and eight_x == z:
+                                            eight_x = 260
+                                            eight_y = 330
+                                else:
+                                    w = 0
+                                    z = 0
+                                    if y2 == 150:
+                                        z = 360
+                                        if lst2[3] == 1:
+                                            w = 180
+                                            lst1[2] = 1
+                                            lst2[3] = 0
+                                        elif lst2[2] == 1:
+                                            w = 230
+                                            lst1[2] = 1
+                                            lst2[2] = 0
+                                        elif lst2[1] == 1:
+                                            w = 280
+                                            lst1[2] = 1
+                                            lst2[1] = 0
+                                        elif lst2[0] == 1:
+                                            w = 330
+                                            lst1[2] = 1
+                                            lst2[0] = 0
+                                    elif y3 == 150:
+                                        z = 460
+                                        if lst3[3] == 1:
+                                            w = 180
+                                            lst3[3] = 0
+                                            lst1[2] = 1
+                                        elif lst3[2] == 1:
+                                            w = 230
+                                            lst3[2] = 0
+                                            lst1[2] = 1
+                                        elif lst3[1] == 1:
+                                            w = 280
+                                            lst3[1] = 0
+                                            lst1[2] = 1
+                                        elif lst3[0] == 1:
+                                            w = 330
+                                            lst3[0] = 0
+                                            lst1[2] = 1
+                                    if one_y == w and one_x == z:
+                                        one_x = 260
+                                        one_y = 280
+                                    elif two_y == w and two_x == z:
+                                        two_x = 260
+                                        two_y = 280
+                                    elif three_y == w and three_x == z:
+                                        three_x = 260
+                                        three_y = 280
+                                    elif four_y == w and four_x == z:
+                                        four_x = 260
+                                        four_y = 280
+                                    elif five_y == w and five_x == z:
+                                        five_x = 260
+                                        five_y = 280
+                                    elif six_y == w and six_x == z:
+                                        six_x = 260
+                                        six_y = 280
+                                    elif seven_y == w and seven_x == z:
+                                        seven_x = 260
+                                        seven_y = 280
+                                    elif eight_y == w and eight_x == z:
+                                        eight_x = 260
+                                        eight_y = 280
+                            else:
+                                w = 0
+                                z = 0
+                                if y2 == 150:
+                                    z = 360
+                                    if lst2[3] == 1:
+                                        w = 180
+                                        lst1[3] = 1
+                                        lst2[3] = 0
+                                    elif lst2[2] == 1:
+                                        w = 230
+                                        lst1[3] = 1
+                                        lst2[2] = 0
+                                    elif lst2[1] == 1:
+                                        w = 280
+                                        lst1[3] = 1
+                                        lst2[1] = 0
+                                    elif lst2[0] == 1:
+                                        w = 330
+                                        lst1[3] = 1
+                                        lst2[0] = 0
+                                elif y3 == 150:
+                                    z = 460
+                                    if lst3[3] == 1:
+                                        w = 180
+                                        lst3[3] = 0
+                                        lst1[3] = 1
+                                    elif lst3[2] == 1:
+                                        w = 230
+                                        lst3[2] = 0
+                                        lst1[3] = 1
+                                    elif lst3[1] == 1:
+                                        w = 280
+                                        lst3[1] = 0
+                                        lst1[3] = 1
+                                    elif lst3[0] == 1:
+                                        w = 330
+                                        lst3[0] = 0
+                                        lst1[3] = 1
+                                if one_y == w and one_x == z:
+                                    one_x = 260
+                                    one_y = 230
+                                elif two_y == w and two_x == z:
+                                    two_x = 260
+                                    two_y = 230
+                                elif three_y == w and three_x == z:
+                                    three_x = 260
+                                    three_y = 230
+                                elif four_y == w and four_x == z:
+                                    four_x = 260
+                                    four_y = 230
+                                elif five_y == w and five_x == z:
+                                    five_x = 260
+                                    five_y = 230
+                                elif six_y == w and six_x == z:
+                                    six_x = 260
+                                    six_y = 230
+                                elif seven_y == w and seven_x == z:
+                                    seven_x = 260
+                                    seven_y = 230
+                                elif eight_y == w and eight_x == z:
+                                    eight_x = 260
+                                    eight_y = 230
+
+
+class buttle2(pygame.sprite.Sprite):
+    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
+
+    def __init__(self, group, x, y):
+        super().__init__(group)
+        self.image = buttle2.image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        global y2
+        y2 = self.rect.y
+        self.count = 1
+
+    def update(self, *args):
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos):
+            global five_y, five_x, six_y, six_x, seven_y, seven_x, eight_x, eight_y, \
+                one_y, one_x, two_y, two_x, three_y, three_x, four_x, four_y, y2, q
+            if q == 0:
+                if self.count % 2 != 0:
+                    q = 1
+                    self.rect.y -= 50
+                    self.count += 1
+                    y2 -= 50
+                    if one_x == 360:
+                        one_y -= 50
+                    if two_x == 360:
+                        two_y -= 50
+                    if three_x == 360:
+                        three_y -= 50
+                    if four_x == 360:
+                        four_y -= 50
+                    if five_x == 360:
+                        five_y -= 50
+                    if six_x == 360:
+                        six_y -= 50
+                    if seven_x == 360:
+                        seven_y -= 50
+                    if eight_x == 360:
+                        eight_y -= 50
+            else:
+                if self.count % 2 == 0:
+                    q = 0
+                    self.rect.y += 50
+                    y2 += 50
+                    if one_x == 360:
+                        one_y += 50
+                    if two_x == 360:
+                        two_y += 50
+                    if three_x == 360:
+                        three_y += 50
+                    if four_x == 360:
+                        four_y += 50
+                    if five_x == 360:
+                        five_y += 50
+                    if six_x == 360:
+                        six_y += 50
+                    if seven_x == 360:
+                        seven_y += 50
+                    if eight_x == 360:
+                        eight_y += 50
+                    self.count += 1
+                else:
+                    global y3, y1
+                    if lst2[3] == 0:
+                        if lst2[2] == 0:
+                            if lst2[1] == 0:
+                                if lst2[0] == 0:
+                                    w = 0
+                                    z = 0
+                                    if y1 == 150:
+                                        z = 260
+                                        if lst1[3] == 1:
+                                            w = 180
+                                            lst2[0] = 1
+                                            lst1[3] = 0
+                                        elif lst1[2] == 1:
+                                            w = 230
+                                            lst2[0] = 1
+                                            lst1[2] = 0
+                                        elif lst1[1] == 1:
+                                            w = 280
+                                            lst2[0] = 1
+                                            lst1[1] = 0
+                                        elif lst1[0] == 1:
+                                            w = 330
+                                            lst2[0] = 1
+                                            lst1[0] = 0
+                                    elif y3 == 150:
+                                        z = 460
+                                        if lst3[3] == 1:
+                                            w = 180
+                                            lst3[3] = 0
+                                            lst2[0] = 1
+                                        elif lst3[2] == 1:
+                                            w = 230
+                                            lst3[2] = 0
+                                            lst2[0] = 1
+                                        elif lst3[1] == 1:
+                                            w = 280
+                                            lst3[1] = 0
+                                            lst2[0] = 1
+                                        elif lst3[0] == 1:
+                                            w = 330
+                                            lst3[0] = 0
+                                            lst2[0] = 1
+                                    if one_y == w and one_x == z:
+                                        one_x = 360
+                                        one_y = 380
+                                    elif two_y == w and two_x == z:
+                                        two_x = 360
+                                        two_y = 380
+                                    elif three_y == w and three_x == z:
+                                        three_x = 360
+                                        three_y = 380
+                                    elif four_y == w and four_x == z:
+                                        four_x = 360
+                                        four_y = 380
+                                    elif five_y == w and five_x == z:
+                                        five_x = 360
+                                        five_y = 380
+                                    elif six_y == w and six_x == z:
+                                        six_x = 360
+                                        six_y = 380
+                                    elif seven_y == w and seven_x == z:
+                                        seven_x = 360
+                                        seven_y = 380
+                                    elif eight_y == w and eight_x == z:
+                                        eight_x = 360
+                                        eight_y = 380
+                                else:
+                                    w = 0
+                                    z = 0
+                                    if y1 == 150:
+                                        z = 260
+                                        if lst1[3] == 1:
+                                            w = 180
+                                            lst2[1] = 1
+                                            lst1[3] = 0
+                                        elif lst1[2] == 1:
+                                            w = 230
+                                            lst2[1] = 1
+                                            lst1[2] = 0
+                                        elif lst1[1] == 1:
+                                            w = 280
+                                            lst2[1] = 1
+                                            lst1[1] = 0
+                                        elif lst1[0] == 1:
+                                            w = 330
+                                            lst2[1] = 1
+                                            lst1[0] = 0
+                                    elif y3 == 150:
+                                        z = 460
+                                        if lst3[3] == 1:
+                                            w = 180
+                                            lst3[3] = 0
+                                            lst2[1] = 1
+                                        elif lst3[2] == 1:
+                                            w = 230
+                                            lst3[2] = 0
+                                            lst2[1] = 1
+                                        elif lst3[1] == 1:
+                                            w = 280
+                                            lst3[1] = 0
+                                            lst2[1] = 1
+                                        elif lst3[0] == 1:
+                                            w = 330
+                                            lst3[0] = 0
+                                            lst2[1] = 1
+                                    if one_y == w and one_x == z:
+                                        one_x = 360
+                                        one_y = 330
+                                    elif two_y == w and two_x == z:
+                                        two_x = 360
+                                        two_y = 330
+                                    elif three_y == w and three_x == z:
+                                        three_x = 360
+                                        three_y = 330
+                                    elif four_y == w and four_x == z:
+                                        four_x = 360
+                                        four_y = 330
+                                    elif five_y == w and five_x == z:
+                                        five_x = 360
+                                        five_y = 330
+                                    elif six_y == w and six_x == z:
+                                        six_x = 360
+                                        six_y = 330
+                                    elif seven_y == w and seven_x == z:
+                                        seven_x = 360
+                                        seven_y = 330
+                                    elif eight_y == w and eight_x == z:
+                                        eight_x = 360
+                                        eight_y = 330
+                            else:
+                                w = 0
+                                z = 0
+                                if y1 == 150:
+                                    z = 260
+                                    if lst1[3] == 1:
+                                        w = 180
+                                        lst2[2] = 1
+                                        lst1[3] = 0
+                                    elif lst1[2] == 1:
+                                        w = 230
+                                        lst2[2] = 1
+                                        lst1[2] = 0
+                                    elif lst1[1] == 1:
+                                        w = 280
+                                        lst2[2] = 1
+                                        lst1[1] = 0
+                                    elif lst1[0] == 1:
+                                        w = 330
+                                        lst2[2] = 1
+                                        lst1[0] = 0
+                                elif y3 == 150:
+                                    z = 460
+                                    if lst3[3] == 1:
+                                        w = 180
+                                        lst3[3] = 0
+                                        lst2[2] = 1
+                                    elif lst3[2] == 1:
+                                        w = 230
+                                        lst3[2] = 0
+                                        lst2[2] = 1
+                                    elif lst3[1] == 1:
+                                        w = 280
+                                        lst3[1] = 0
+                                        lst2[2] = 1
+                                    elif lst3[0] == 1:
+                                        w = 330
+                                        lst3[0] = 0
+                                        lst2[2] = 1
+                                if one_y == w and one_x == z:
+                                    one_x = 360
+                                    one_y = 280
+                                elif two_y == w and two_x == z:
+                                    two_x = 360
+                                    two_y = 280
+                                elif three_y == w and three_x == z:
+                                    three_x = 360
+                                    three_y = 280
+                                elif four_y == w and four_x == z:
+                                    four_x = 360
+                                    four_y = 280
+                                elif five_y == w and five_x == z:
+                                    five_x = 360
+                                    five_y = 280
+                                elif six_y == w and six_x == z:
+                                    six_x = 360
+                                    six_y = 280
+                                elif seven_y == w and seven_x == z:
+                                    seven_x = 360
+                                    seven_y = 280
+                                elif eight_y == w and eight_x == z:
+                                    eight_x = 360
+                                    eight_y = 280
+                        else:
+                            w = 0
+                            z = 0
+                            if y1 == 150:
+                                z = 260
+                                if lst1[3] == 1:
+                                    w = 180
+                                    lst2[3] = 1
+                                    lst1[3] = 0
+                                elif lst1[2] == 1:
+                                    w = 230
+                                    lst2[3] = 1
+                                    lst1[2] = 0
+                                elif lst1[1] == 1:
+                                    w = 280
+                                    lst2[3] = 1
+                                    lst1[1] = 0
+                                elif lst1[0] == 1:
+                                    w = 330
+                                    lst2[3] = 1
+                                    lst1[0] = 0
+                            elif y3 == 150:
+                                z = 460
+                                if lst3[3] == 1:
+                                    w = 180
+                                    lst3[3] = 0
+                                    lst2[3] = 1
+                                elif lst3[2] == 1:
+                                    w = 230
+                                    lst3[2] = 0
+                                    lst2[3] = 1
+                                elif lst3[1] == 1:
+                                    w = 280
+                                    lst3[1] = 0
+                                    lst2[3] = 1
+                                elif lst3[0] == 1:
+                                    w = 330
+                                    lst3[0] = 0
+                                    lst2[3] = 1
+                            if one_y == w and one_x == z:
+                                one_x = 360
+                                one_y = 230
+                            elif two_y == w and two_x == z:
+                                two_x = 360
+                                two_y = 230
+                            elif three_y == w and three_x == z:
+                                three_x = 360
+                                three_y = 230
+                            elif four_y == w and four_x == z:
+                                four_x = 360
+                                four_y = 230
+                            elif five_y == w and five_x == z:
+                                five_x = 360
+                                five_y = 230
+                            elif six_y == w and six_x == z:
+                                six_x = 360
+                                six_y = 230
+                            elif seven_y == w and seven_x == z:
+                                seven_x = 360
+                                seven_y = 230
+                            elif eight_y == w and eight_x == z:
+                                eight_x = 360
+                                eight_y = 230
+
+
+class buttle3(pygame.sprite.Sprite):
+    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.5, 0.5)
+
+    def __init__(self, group, x, y):
+        super().__init__(group)
+        self.image = buttle3.image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        global y3
+        y3 = self.rect.y
+        self.count = 1
+
+    def update(self, *args):
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos):
+            global five_y, five_x, six_y, six_x, seven_y, seven_x, eight_x, eight_y, \
+                one_y, one_x, two_y, two_x, three_y, three_x, four_x, four_y, y3, q
+            if q == 0:
+                if self.count % 2 != 0:
+                    q = 1
+                    self.rect.y -= 50
+                    self.count += 1
+                    y3 -= 50
+                    if one_x == 460:
+                        one_y -= 50
+                    if two_x == 460:
+                        two_y -= 50
+                    if three_x == 460:
+                        three_y -= 50
+                    if four_x == 460:
+                        four_y -= 50
+                    if five_x == 460:
+                        five_y -= 50
+                    if six_x == 460:
+                        six_y -= 50
+                    if seven_x == 460:
+                        seven_y -= 50
+                    if eight_x == 460:
+                        eight_y -= 50
+            else:
+                if self.count % 2 == 0:
+                    q = 0
+                    self.rect.y += 50
+                    y3 += 50
+                    if one_x == 460:
+                        one_y += 50
+                    if two_x == 460:
+                        two_y += 50
+                    if three_x == 460:
+                        three_y += 50
+                    if four_x == 460:
+                        four_y += 50
+                    if five_x == 460:
+                        five_y += 50
+                    if six_x == 460:
+                        six_y += 50
+                    if seven_x == 460:
+                        seven_y += 50
+                    if eight_x == 460:
+                        eight_y += 50
+                    self.count += 1
+                else:
+                    global y2, y1
+                    if lst3[3] == 0:
+                        if lst3[2] == 0:
+                            if lst3[1] == 0:
+                                if lst3[0] == 0:
+                                    w = 0
+                                    z = 0
+                                    if y1 == 150:
+                                        z = 260
+                                        if lst1[3] == 1:
+                                            w = 180
+                                            lst3[0] = 1
+                                            lst1[3] = 0
+                                        elif lst1[2] == 1:
+                                            w = 230
+                                            lst3[0] = 1
+                                            lst1[2] = 0
+                                        elif lst1[1] == 1:
+                                            w = 280
+                                            lst3[0] = 1
+                                            lst1[1] = 0
+                                        elif lst1[0] == 1:
+                                            w = 330
+                                            lst3[0] = 1
+                                            lst1[0] = 0
+                                    elif y2 == 150:
+                                        z = 360
+                                        if lst2[3] == 1:
+                                            w = 180
+                                            lst2[3] = 0
+                                            lst3[0] = 1
+                                        elif lst2[2] == 1:
+                                            w = 230
+                                            lst2[2] = 0
+                                            lst3[0] = 1
+                                        elif lst2[1] == 1:
+                                            w = 280
+                                            lst2[1] = 0
+                                            lst3[0] = 1
+                                        elif lst2[0] == 1:
+                                            w = 330
+                                            lst2[0] = 0
+                                            lst3[0] = 1
+                                    if one_y == w and one_x == z:
+                                        one_x = 460
+                                        one_y = 380
+                                    elif two_y == w and two_x == z:
+                                        two_x = 460
+                                        two_y = 380
+                                    elif three_y == w and three_x == z:
+                                        three_x = 460
+                                        three_y = 380
+                                    elif four_y == w and four_x == z:
+                                        four_x = 460
+                                        four_y = 380
+                                    elif five_y == w and five_x == z:
+                                        five_x = 460
+                                        five_y = 380
+                                    elif six_y == w and six_x == z:
+                                        six_x = 460
+                                        six_y = 380
+                                    elif seven_y == w and seven_x == z:
+                                        seven_x = 460
+                                        seven_y = 380
+                                    elif eight_y == w and eight_x == z:
+                                        eight_x = 460
+                                        eight_y = 380
+                                else:
+                                    w = 0
+                                    z = 0
+                                    if y1 == 150:
+                                        z = 260
+                                        if lst1[3] == 1:
+                                            w = 180
+                                            lst3[1] = 1
+                                            lst1[3] = 0
+                                        elif lst1[2] == 1:
+                                            w = 230
+                                            lst3[1] = 1
+                                            lst1[2] = 0
+                                        elif lst1[1] == 1:
+                                            w = 280
+                                            lst3[1] = 1
+                                            lst1[1] = 0
+                                        elif lst1[0] == 1:
+                                            w = 330
+                                            lst3[1] = 1
+                                            lst1[0] = 0
+                                    elif y2 == 150:
+                                        z = 360
+                                        if lst2[3] == 1:
+                                            w = 180
+                                            lst2[3] = 0
+                                            lst3[1] = 1
+                                        elif lst2[2] == 1:
+                                            w = 230
+                                            lst2[2] = 0
+                                            lst3[1] = 1
+                                        elif lst2[1] == 1:
+                                            w = 280
+                                            lst2[1] = 0
+                                            lst3[1] = 1
+                                        elif lst2[0] == 1:
+                                            w = 330
+                                            lst2[0] = 0
+                                            lst3[1] = 1
+                                    if one_y == w and one_x == z:
+                                        one_x = 460
+                                        one_y = 330
+                                    elif two_y == w and two_x == z:
+                                        two_x = 460
+                                        two_y = 330
+                                    elif three_y == w and three_x == z:
+                                        three_x = 460
+                                        three_y = 330
+                                    elif four_y == w and four_x == z:
+                                        four_x = 460
+                                        four_y = 330
+                                    elif five_y == w and five_x == z:
+                                        five_x = 460
+                                        five_y = 330
+                                    elif six_y == w and six_x == z:
+                                        six_x = 460
+                                        six_y = 330
+                                    elif seven_y == w and seven_x == z:
+                                        seven_x = 460
+                                        seven_y = 330
+                                    elif eight_y == w and eight_x == z:
+                                        eight_x = 460
+                                        eight_y = 330
+                            else:
+                                w = 0
+                                z = 0
+                                if y1 == 150:
+                                    z = 260
+                                    if lst1[3] == 1:
+                                        w = 180
+                                        lst3[2] = 1
+                                        lst1[3] = 0
+                                    elif lst1[2] == 1:
+                                        w = 230
+                                        lst3[2] = 1
+                                        lst1[2] = 0
+                                    elif lst1[1] == 1:
+                                        w = 280
+                                        lst3[2] = 1
+                                        lst1[1] = 0
+                                    elif lst1[0] == 1:
+                                        w = 330
+                                        lst3[2] = 1
+                                        lst1[0] = 0
+                                elif y2 == 150:
+                                    z = 360
+                                    if lst2[3] == 1:
+                                        w = 180
+                                        lst2[3] = 0
+                                        lst3[2] = 1
+                                    elif lst2[2] == 1:
+                                        w = 230
+                                        lst2[2] = 0
+                                        lst3[2] = 1
+                                    elif lst2[1] == 1:
+                                        w = 280
+                                        lst2[1] = 0
+                                        lst3[2] = 1
+                                    elif lst2[0] == 1:
+                                        w = 330
+                                        lst2[0] = 0
+                                        lst3[2] = 1
+                                if one_y == w and one_x == z:
+                                    one_x = 460
+                                    one_y = 280
+                                elif two_y == w and two_x == z:
+                                    two_x = 460
+                                    two_y = 280
+                                elif three_y == w and three_x == z:
+                                    three_x = 460
+                                    three_y = 280
+                                elif four_y == w and four_x == z:
+                                    four_x = 460
+                                    four_y = 280
+                                elif five_y == w and five_x == z:
+                                    five_x = 460
+                                    five_y = 280
+                                elif six_y == w and six_x == z:
+                                    six_x = 460
+                                    six_y = 280
+                                elif seven_y == w and seven_x == z:
+                                    seven_x = 460
+                                    seven_y = 280
+                                elif eight_y == w and eight_x == z:
+                                    eight_x = 460
+                                    eight_y = 280
+                        else:
+                            w = 0
+                            z = 0
+                            if y1 == 150:
+                                z = 260
+                                if lst1[3] == 1:
+                                    w = 180
+                                    lst3[3] = 1
+                                    lst1[3] = 0
+                                elif lst1[2] == 1:
+                                    w = 230
+                                    lst3[3] = 1
+                                    lst1[2] = 0
+                                elif lst1[1] == 1:
+                                    w = 280
+                                    lst3[3] = 1
+                                    lst1[1] = 0
+                                elif lst1[0] == 1:
+                                    w = 330
+                                    lst3[3] = 1
+                                    lst1[0] = 0
+                            elif y2 == 150:
+                                z = 360
+                                if lst2[3] == 1:
+                                    w = 180
+                                    lst2[3] = 0
+                                    lst3[3] = 1
+                                elif lst2[2] == 1:
+                                    w = 230
+                                    lst2[2] = 0
+                                    lst3[3] = 1
+                                elif lst2[1] == 1:
+                                    w = 280
+                                    lst2[1] = 0
+                                    lst3[3] = 1
+                                elif lst2[0] == 1:
+                                    w = 330
+                                    lst2[0] = 0
+                                    lst3[3] = 1
+                            if one_y == w and one_x == z:
+                                one_x = 460
+                                one_y = 230
+                            elif two_y == w and two_x == z:
+                                two_x = 460
+                                two_y = 230
+                            elif three_y == w and three_x == z:
+                                three_x = 460
+                                three_y = 230
+                            elif four_y == w and four_x == z:
+                                four_x = 460
+                                four_y = 230
+                            elif five_y == w and five_x == z:
+                                five_x = 460
+                                five_y = 230
+                            elif six_y == w and six_x == z:
+                                six_x = 460
+                                six_y = 230
+                            elif seven_y == w and seven_x == z:
+                                seven_x = 460
+                                seven_y = 230
+                            elif eight_y == w and eight_x == z:
+                                eight_x = 460
+                                eight_y = 230
+
+
+running = True
+fps = 60
+all_sprites = pygame.sprite.Group()
+buttle1(all_sprites, 250, 200)
+buttle2(all_sprites, 350, 200)
+buttle3(all_sprites, 450, 200)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('one')
+else:
+    color = 'green'
+    lstgreen.append('one')
+lst.remove(num)
+one = Player(rect_sprite, one_x + 30, one_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('two')
+else:
+    color = 'green'
+    lstgreen.append('two')
+lst.remove(num)
+two = Player(rect_sprite, two_x + 30, two_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('three')
+else:
+    color = 'green'
+    lstgreen.append('three')
+lst.remove(num)
+three = Player(rect_sprite, three_x + 30, three_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('four')
+else:
+    color = 'green'
+    lstgreen.append('four')
+lst.remove(num)
+four = Player(rect_sprite, four_x + 30, four_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('five')
+else:
+    color = 'green'
+    lstgreen.append('five')
+lst.remove(num)
+five = Player(rect_sprite, five_x + 30, five_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('six')
+else:
+    color = 'green'
+    lstgreen.append('six')
+lst.remove(num)
+six = Player(rect_sprite, six_x + 30, six_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('seven')
+else:
+    color = 'green'
+    lstgreen.append('seven')
+lst.remove(num)
+seven = Player(rect_sprite, seven_x + 30, seven_y + 25, color)
+num = choice(lst)
+if num == 0:
+    color = 'red'
+    lstred.append('eight')
+else:
+    color = 'green'
+    lstgreen.append('eight')
+lst.remove(num)
+eight = Player(rect_sprite, eight_x + 30, eight_y + 25, color)
+
+
+def run():
+    while True:
+        one.q(one_x + 29, one_y + 25)
+        two.q(two_x + 29, two_y + 25)
+        three.q(three_x + 29, three_y + 25)
+        four.q(four_x + 29, four_y + 25)
+        five.q(five_x + 29, five_y + 25)
+        six.q(six_x + 29, six_y + 25)
+        seven.q(seven_x + 29, seven_y + 25)
+        eight.q(eight_x + 29, eight_y + 25)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                all_sprites.update(event)
+        screen.fill((0, 0, 0))
+        all_sprites.draw(screen)
+        rect_sprite.draw(screen)
+        pygame.display.flip()
+
+
+def draw():
+    screen.fill("black")
+    all_sprites.update()
+    all_sprites.draw(screen)
+    pygame.display.flip()
+
+
+if __name__ == "__main__":
+    run()
