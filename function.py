@@ -43,6 +43,7 @@ def fanction(number, time):
 
     class Button(pygame.sprite.Sprite):
         image = pygame.transform.scale(load_image("2109.w032.n003.116B.p1.116.jpg"), (100, 50))
+        image_2 = pygame.transform.scale(load_image("2109.w032.n003.116B.p1.116 — копия.jpg"), (100, 50))
 
         def __init__(self, group, x, y):
             super().__init__(group)
@@ -59,6 +60,11 @@ def fanction(number, time):
             if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                     self.rect.collidepoint(args[0].pos):
                 self.flag = False
+            if args and args[0].type == pygame.MOUSEMOTION and \
+                    self.rect.collidepoint(args[0].pos):
+                self.image = Button.image_2
+            else:
+                self.image = Button.image
 
     class FON(pygame.sprite.Sprite):
         image = pygame.transform.scale(load_image("5447769.jpg"), (600, 400))
@@ -78,6 +84,8 @@ def fanction(number, time):
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 sprite_Button.update(event)
+            if event.type == pygame.MOUSEMOTION:
+                sprite_Button.update(event, True)
         if not a1.flag:
             running = False
         sprite_Button.draw(screen)
