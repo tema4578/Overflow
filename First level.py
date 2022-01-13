@@ -4,8 +4,6 @@ import sys
 
 import pygame
 
-# Изображение не получится загрузить
-# без предварительной инициализации pygame
 pygame.init()
 size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
@@ -14,7 +12,6 @@ sound1 = pygame.mixer.Sound('Sound_07433 (mp3cut.net).wav')
 
 def load_image(name, colorkey=None, fl=False):
     fullname = os.path.join(name)
-    # если файл не существует, то выходим
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
         sys.exit()
@@ -116,13 +113,8 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
 
 class Bomb(pygame.sprite.Sprite):
-    image_1 = load_image("buttle.jpg")
-    image_boom = load_image("buttle.jpg")
-    image = pygame.transform.rotozoom(load_image("buttle.jpg"), 0.3, 0.3)
-
+    image = pygame.transform.scale(load_image("Снимок экрана (77).png"), (30, 100))
     def __init__(self, group, x, y):
-        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
-        # Это очень важно !!!
         super().__init__(group)
         self.image = Bomb.image
         self.rect = self.image.get_rect()
@@ -132,14 +124,17 @@ class Bomb(pygame.sprite.Sprite):
         self.name = count
 
     def update(self, *args):
+        global rgr
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
             if self.flag:
+                rgr = True
                 self.rect.y -= 20
                 rect_sprite.update(self.name, self.flag)
                 self.flag = False
                 sound1.play()
             else:
+                rgr = False
                 rect_sprite.update(self.name, self.flag)
                 self.rect.y += 20
                 self.flag = True
@@ -148,10 +143,8 @@ class Bomb(pygame.sprite.Sprite):
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, group, x, y, color):
-        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
-        # Это очень важно !!!
         super().__init__(group)
-        self.image = pygame.Surface((32, 30))
+        self.image = pygame.Surface((28, 23))
         self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -175,12 +168,12 @@ dragon1 = AnimatedSprite(
 dragon2 = AnimatedSprite(
     pygame.transform.scale(load_image('photoeditorsdk-export (1).png', -1), (40, 40)), 1, 1, 65, 5)
 color = ['GREEN', 'RED', 'BLUE', 'ORANGE', 'beige', 'Brown', 'yellow']
-for _ in range(5):
+for _ in range(3):
     Bomb(all_sprites, r_x, 200)
-    c = 320
+    c = 287
     for j in range(4):
-        Player(rect_sprite, r_x + 22, c, random.choice(color))
-        c -= 30
+        Player(rect_sprite, r_x + 15, c, random.choice(color))
+        c -= 23
     r_x += 100
     count += 1
 running = True
@@ -188,6 +181,7 @@ fps = 60
 clock = pygame.time.Clock()
 CLK = 20
 co = 5
+rgr = False
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
