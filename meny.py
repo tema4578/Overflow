@@ -95,6 +95,9 @@ def fanction():
             if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                     self.rect.collidepoint(args[0].pos) and not self.name:
                 a1.flag = True
+            if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                    self.rect.collidepoint(args[0].pos) and self.name == 1 and self.name:
+                print(45)  # включается 1 уровень
             if args and args[0].type == pygame.MOUSEMOTION and \
                     self.rect.collidepoint(args[0].pos):
                 self.image = self.image
