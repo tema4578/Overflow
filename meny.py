@@ -16,6 +16,7 @@ def load_image(name, colorkey=None, fl=False):
         image = image.convert()
         if colorkey == -1:
             colorkey = image.get_at((50, 50))
+            print(colorkey)
         image.set_colorkey(colorkey)
     else:
         image = image.convert_alpha()
@@ -95,9 +96,6 @@ def fanction():
             if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                     self.rect.collidepoint(args[0].pos) and not self.name:
                 a1.flag = True
-            if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
-                    self.rect.collidepoint(args[0].pos) and self.name == 1 and self.name:
-                print(45)  # включается 1 уровень
             if args and args[0].type == pygame.MOUSEMOTION and \
                     self.rect.collidepoint(args[0].pos):
                 self.image = self.image
@@ -182,6 +180,7 @@ def fanction():
                 elif a1.flag != 2:
                     sprite_Button_levels.update(event)
                 sprite_Button_resultats.update(event)
+                print(78)
             if event.type == pygame.MOUSEMOTION:
                 sprite_Button.update(event, True)
         if not a1.flag and a1.flag != 2:
